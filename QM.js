@@ -44,6 +44,12 @@
     isObject:function(o){
         return this.type(o)==="Object";
     },
+    isArray:function(o){
+        return this.type(o)==='Array';
+    },
+    isString:function(o){
+        return this.type(o)==='String';
+    },
     objectCount:function(o){
         var n = 0,
             k;
@@ -51,6 +57,9 @@
             n++;
         }
         return n;
+    },
+    trim:function(str){
+        return str.replace(/(^\s*)/,"").replace(/(\s*$)/,"");
     },
     /** 生成唯一标识 **/
     uid:function(){
@@ -447,6 +456,36 @@
             }
         }
     },
+    stringify:function(data){
+        // if(this.W.JSON){
+        //     return this.W.JSON.stringify(data);
+        // }
+        var s=[],
+            i=0,
+            len,
+            j;
+        switch(this.type(data)){
+            case 'Object':
+                for(i in data){
+                    if(!data.hasOwnProperty(data[i])){
+                        data[i]=this.isString(data[i])?'"'+data[i]+'"':(this.isObject(data[i])?this.stringify(data[i]):'"'+data[i]+'"');// 递归执行
+                        s.push('"'+i+'"'+':'+data[i]);
+                    }
+                }
+                j='{'+s.join(',')+'}';
+                return j;
+            break;
+            case 'Array':
+                for(i,len=data.length;i<len;i++){
+                    data[i]=this.isString(data[i])?'"'+data[i]+'"':(this.isArray(data[i])?this.stringify(data[i]):data[i]);
+                    s.push('"'+i+'"'+':'+data[i]);
+                }
+                j='{'+s.join(',')+'}';
+                return j;
+            break;
+            default:break;
+        }
+    },
     // 给外部调用的方法
     method:function(){
         var that=this;
@@ -504,6 +543,7 @@
                 }else{
                     that.config[key]=value;
                 }
+                return this;
             },
             bind:function(type,data,fn){
                 if(!type){return;}
@@ -513,6 +553,24 @@
             },
             unbind:function(type,fn){
                 that.unbind(this[0],type,fn);
+                return this;
+            },
+            // json解析方法
+            parse:function(data){
+                if(!that.isString(data)||!data){
+                    return this;
+                }
+                var d=that.trim(data),
+                    r=that.W.JSON?that.W.JSON.parse(d):(new Function('d','return'+d)());
+                return r;
+            },
+            // 对象字面量转换成json 支持对象和数组 但是对象里面不能包含数组 数组里面不能包含对象
+            stringify:function(data){
+                if(data || that.isObject(data) || that.isArray(data)){
+                    var d=that.stringify(data);
+                    return d;
+                }
+                return this;
             }
         }
     }
