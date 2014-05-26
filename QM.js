@@ -456,10 +456,11 @@
             }
         }
     },
+    // 数组对象转换成字符串 目前版本没解决对象里面不可以包含数组或者数组里面不能包含对象的问题
     stringify:function(data){
-        // if(this.W.JSON){
-        //     return this.W.JSON.stringify(data);
-        // }
+        if(this.W.JSON){
+            return this.W.JSON.stringify(data);
+        }
         var s=[],
             i=0,
             len,
@@ -468,7 +469,7 @@
             case 'Object':
                 for(i in data){
                     if(!data.hasOwnProperty(data[i])){
-                        data[i]=this.isString(data[i])?'"'+data[i]+'"':(this.isObject(data[i])?this.stringify(data[i]):'"'+data[i]+'"');// 递归执行
+                        data[i]=this.isString(data[i])?'"'+data[i]+'"':(this.isObject(data[i])?this.stringify(data[i]):data[i]);// 递归执行
                         s.push('"'+i+'"'+':'+data[i]);
                     }
                 }
@@ -478,9 +479,9 @@
             case 'Array':
                 for(i,len=data.length;i<len;i++){
                     data[i]=this.isString(data[i])?'"'+data[i]+'"':(this.isArray(data[i])?this.stringify(data[i]):data[i]);
-                    s.push('"'+i+'"'+':'+data[i]);
+                    s.push(data[i]);
                 }
-                j='{'+s.join(',')+'}';
+                j='['+s.join(',')+']';
                 return j;
             break;
             default:break;
