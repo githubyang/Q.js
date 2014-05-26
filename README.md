@@ -46,7 +46,7 @@ M.$('#id').bind('tap',function(){
 ```javascript
 M.parse('传入需要解析的json字符串');
 ```
-对象字面量转json字符串和数组转json字符串
+对象字面量转字符串和数组转字符串
 
 ```javascript
 M.stringify('传入需要解析的对象或者数组');// 对象里面不可以包含数组或者数组里面不能包含对象
