@@ -487,6 +487,63 @@
             default:break;
         }
     },
+    // 检测class的值是不是已经存在
+    checkClass:function(value){
+        var r = new RegExp('(\\s|^)' + value + '(\\s|$)'),
+            d = this;
+        return r.test(d.className);
+    },
+    // 添加class
+    addClass:function(elem,value){
+        var bool=this.checkClass.call(elem,value),
+            obj=elem,
+            name;
+        if(bool){
+            return;
+        }
+        name=obj.className;
+        name+=' '+value;
+        obj.className=name;
+    },
+    // 移除class 如果class的值为空的话就移除class
+    removeClass:function(elem,value){
+        var bool=this.checkClass.call(elem,value),
+            obj=elem,
+            attribute=this.trim(obj.className),
+            len=attribute.split(' ').length,
+            name;
+        if(bool){
+            if(len===1){
+                obj.removeAttribute('class');
+                return;
+            }
+            var r=new RegExp('(\\s|^)' + value);
+            obj.className=obj.className.replace(r,'');
+        }
+    },
+    getAttr:function(elem,name){
+        if(elem){
+            return elem.getAttribute(name);
+        }
+    },
+    setAttr:function(elem,name,value){
+        if(value){
+            if(this.isFunction(value)){
+                var v=elem.getAttribute(name),
+                    r=value.call(elem,v);
+                if(r){
+                    elem.setAttribute(name,r);
+                }
+            }else{
+                elem.setAttribute(name,value);
+            }
+        }
+    },
+    removeAttr:function(elem,name){
+        if(name){
+            elem.removeAttribute(name);
+        }
+    },
     // 给外部调用的方法
     method:function(){
         var that=this;
@@ -508,12 +565,15 @@
             each:function(obj,callback,args){
                 return that.each(obj,callback,args);
             },
+            // 继承或者参数合并
             extend:function(obj,prop) {
                 return that.extend(this,obj,prop);
             },
+            // 浏览器版本
             browser:function(type){
                 return that.browser(type);
             },
+            // 数据缓存读和写
             data:function(key,value) {
                 var obj=that,
                     elem=this[0],
@@ -571,6 +631,41 @@
                     var d=that.stringify(data);
                     return d;
                 }
+                return this;
+            },
+            // 当参数为空的时候获取节点的文本 参数存在则设置
+            html:function(value){
+                if(value){
+                    this[0].innerHTML=value;
+                    return this;
+                }else{
+                    var r=this[0].innerHTML;
+                    return r;
+                }
+            },
+            // 当两个参数都存在则设置属性值 第一个参数存在则获取 第二个参数也可以是函数 当函数执行完毕再设置函数返回的值为属性值
+            attr:function(name,value){
+                if(value){
+                    that.setAttr(this[0],name,value);
+                        return this;
+                }else{
+                    var r=that.getAttr(this[0],name);
+                    return r;
+                }
+            },
+            // 移除属性
+            removeAttr:function(name){
+                that.removeAttr(this[0],name);
+                return this;
+            },
+            // 添加class
+            addClass:function(value){
+                that.addClass(this[0],value);
+                return this;
+            },
+            // 移除class
+            removeClass:function(value){
+                that.removeClass(this[0],value);
                 return this;
             }
         }
