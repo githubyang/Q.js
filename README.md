@@ -65,6 +65,7 @@ $('#id').removeClass('class名称');// 移除class
 ```
 
 * 事件模块
+
 # touch事件
 
 ## 回调函数的参数
@@ -202,4 +203,21 @@ $('#id或者.class').unbind('需要取消的事件名称');
 ### 浏览器检测模块
 ```javascript
 // 开发中
+```
+
+### 倒计时插件 Q.countTime.js
+```javascript
+$('#id/.class').countTime({
+    timeStart:Date.parse('2015/01/01 00:00:00'),//开始时间
+    timeEnd:Date.parse('2015/01/01 01:00:00'),//结束时间
+    formatt:{//时间格式
+        days:'{d}天 ',
+        hours:'{hh}小时 ',
+        minutes:'{mm}分 ',
+        seconds:'{ss}秒'
+    }, 
+    callback:function(e){//返回格式化的时间数组
+    	console.log(e)
+    }
+});
 ```

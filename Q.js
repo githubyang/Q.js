@@ -22,7 +22,7 @@
     	},
 			selector=function(s){
 				if(!s){return result;}
-				if(s.nodeType){return classArray(s);}
+				if(s.nodeType){return (result[0]=s,result);}
 				if(s==='body' && document.body){return classArray(document.body);}
         var dom,len,arr=[],i=0;
         if(s.indexOf('#')===0){
