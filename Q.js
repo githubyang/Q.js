@@ -12,8 +12,9 @@
 			classArray=function(dom){
 				var l=dom.length,i=0;
 				if(l>1){
+          result[0]=[];
 					for(;i<l;i++){
-            result[i]=dom[i]; 
+            result[0][i]=dom[i]; 
           }
 				}else{
 					result[0]=dom[0];
@@ -350,8 +351,8 @@
   }());
 	var result={
 		v:1.0,
-		each:function(obj,callback,args){
-			return Q.each(obj,callback,args);
+		each:function(callback,args){
+			return Q.each(this[0],callback,args);
 		},
     // 当参数为空的时候获取节点的文本 参数存在则设置
     html:function(value){
@@ -467,13 +468,13 @@
     if(args){
       if(isObj){
         for(name in object){
-          if(callback.apply(object[name],args)===false){
+          if(callback.apply(object[name],[name,object[name],args])===false){
             break;
           }
         }
       }else{
         for(;i<length;){
-          if(callback.apply(object[i++],args)===false){
+          if(callback.apply(object[i],[i,object[i++],args])===false){
             break;
           }
         }
