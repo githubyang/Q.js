@@ -169,7 +169,6 @@ $('#id或者.class').bind('swipeend',function(e){
 ```javascript
 $('#id或者.class').unbind('需要取消的事件名称');
 ```
-```
 
 ### 表单验证模块
 ```javascript
