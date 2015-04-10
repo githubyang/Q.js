@@ -65,7 +65,6 @@ $('#id').removeClass('class名称');// 移除class
 ```
 
 * 事件模块
-```javascript
 # touch事件
 
 ## 回调函数的参数
