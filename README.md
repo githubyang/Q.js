@@ -8,7 +8,7 @@ Q.js的插件扩展是以对象字面量的形式扩展插件，框架的开发�
 QM.js已废弃。
 
 ## 当前框架版本 1.1
- 
+
 1.2 (开发中...)
 
 ### API
@@ -210,7 +210,8 @@ $('#id或者.class').unbind('需要取消的事件名称');
 // 开发中
 ```
 
-### 上拉下拉刷新模块
+### 上拉下拉刷新模块 Q.touchload.js
+
 ```javascript
 Q('#id/.class').touchload(function(){
   // ajax数据获取
