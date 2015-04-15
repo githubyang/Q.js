@@ -852,5 +852,5 @@
     };
     o.run(options||{});
   };
-	win.Q=Q;
+	win.Q=win.$=Q;
 }(window));
