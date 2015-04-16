@@ -215,7 +215,7 @@ $('#id或者.class').unbind('需要取消的事件名称');
 ```javascript
 Q('#id/.class').touchload(function(e){
   // ajax数据获取
-  this.before('在加载提示元素前面插入加载的数据');
+  e.before('在加载提示元素前面插入加载的数据');
   e.html('上拉加载');//更新加载提示
   return true;//防止前一次加载数据没成功返回而再次触发
 });
