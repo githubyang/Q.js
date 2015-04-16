@@ -248,8 +248,9 @@
                       x:(displacementX<0?false:true)
                     },
                     distance=Math.sqrt(Math.pow(displacementX,2)+Math.pow(displacementY,2));
-                var duration=+Date.now()-gesture.time;
-                (distance>25&&duration>1)&&(e.preventDefault());
+                // var duration=+Date.now()-gesture.time;
+                // (distance>25&&duration>1)&&(e.preventDefault());
+                
                 (gesture.status=="taping" && distance>10)&&(
                   gesture.status="swipeing",
                   events=doc.createEvent('HTMLEvents'),
@@ -609,7 +610,7 @@
           value=arguments[1],
           l=arguments.length;
       if(l==2){
-        return style.call(this[0],name,value);
+        style.call(this[0],name,value);
       }
       if(l===1 && l<2){
         if(Q.isObject(name)){
@@ -622,6 +623,7 @@
           style.call(this[i],name);
         }
       }
+      return this;
     },
     scrollTop:function(value){
       var hasScrollTop='scrollTop' in this[0];

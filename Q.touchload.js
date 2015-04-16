@@ -1,14 +1,32 @@
 Q.fn.touchload=function(callback){
   var scrollTop=0,
       _this=this,
-      is=true;
+      is=true,
+      elem=null,
+      timeOutId=null;
+  (function(o){
+    o.append('<div id="touchload">上拉刷新</div>');
+    elem=Q('#touchload');
+    elem.css({
+      'position':'relative',
+      'height':'40px',
+      'lineHeight':'40px',
+      'overflow':'hidden',
+      'textAlign':'center',
+      'background':'#f2f2f2'
+    });
+  }(this));
   this.bind('swipestart',function(e){
     scrollTop=Q(window).scrollTop();
   });
-  this.bind('swipeend',function(e){
-    if(is&&((+_this.height()-(+scrollTop+window.innerHeight-45))<=0)){
-      is=false;
-      callback&&(is=callback());
-    }
+  this.bind('swipemove',function(e){
+    window.clearInterval(timeOutId);
+    timeOutId=window.setTimeout(function(){  
+      if(is&&((+_this.height()-(+scrollTop+window.innerHeight-45))<=0)){
+        is=false;
+        elem.html('加载中...');
+        callback&&(is=callback.call(_this,elem));
+      }
+    },200);
   });
 };

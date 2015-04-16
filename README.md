@@ -213,9 +213,11 @@ $('#id或者.class').unbind('需要取消的事件名称');
 ### 上拉下拉刷新模块 Q.touchload.js
 
 ```javascript
-Q('#id/.class').touchload(function(){
+Q('#id/.class').touchload(function(e){
   // ajax数据获取
-  return true;// 返回true才能触发加载
+  this.before('在加载提示元素前面插入加载的数据');
+  e.html('上拉加载');//更新加载提示
+  return true;//防止前一次加载数据没成功返回而再次触发
 });
 ```
 
