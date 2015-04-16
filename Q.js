@@ -1,7 +1,7 @@
 ;(function(win){
-	var doc=win.document,
-			Q=function(select){return selector(select);},
-			cacheDom={},
+  var doc=win.document,
+      Q=function(select){return selector(select);},
+      cacheDom={},
       eventList={},
       elemObj=null,
       body=doc.body,
@@ -12,8 +12,8 @@
           obj[i]=prop[i];
         }
         return obj;
-    	},
-			classArray=function(dom){
+      },
+      classArray=function(dom){
         var toArray=function(s){
           try{
             return Array.prototype.slice.call(s);
@@ -30,11 +30,11 @@
           arr[i]=result[i];
         }
         return arr;
-    	},
-			selector=function(s){
-				if(!s){return result;}
-				if(s.nodeType){return (result[0]=s,result);}
-				if(s==='body' && document.body){return classArray([document.body]);}
+      },
+      selector=function(s){
+        if(!s){return result;}
+        if(s.nodeType){return classArray([s]);}
+        if(s==='body' && document.body){return classArray([document.body]);}
         if(Q.isWindow(s)){return classArray([window]);}
         var dom,len,arr=[],i=0;
         if(s.indexOf('#')===0){
@@ -44,7 +44,7 @@
           dom=doc.querySelectorAll(s);
           return classArray(dom);
         }
-    	};
+      };
   Q.type=function(o){return o!=undefined?(Object.prototype.toString.call(o)).slice(8,-1):'undefined';};
   Q.isQ=function(o){return (o.v);};
   Q.isFunction=function(o){return this.type(o)==="Function";};
@@ -59,8 +59,8 @@
         if(elem){
           return elem.getAttribute(name);
         }
-    	},
-    	setAttr=function(elem,name,value){
+      },
+      setAttr=function(elem,name,value){
         if(value){
           if(Q.isFunction(value)){
             var v=elem.getAttribute(name),
@@ -72,20 +72,20 @@
             elem.setAttribute(name,value);
           }
         }
-    	},
-    	removeAttr=function(elem,name){
+      },
+      removeAttr=function(elem,name){
         if(name){
           elem.removeAttribute(name);
         }
-    	},
-    	// 检测class的值是不是已经存在
-    	checkClass=function(value){
+      },
+      // 检测class的值是不是已经存在
+      checkClass=function(value){
         var r=new RegExp('(\\s|^)'+value+'(\\s|$)');
         console.log(this)
         return r.test(this[0].className);
-    	},
-    	// 添加class
-    	addClass=function(elem,value){
+      },
+      // 添加class
+      addClass=function(elem,value){
         var is=checkClass.call(elem,value),
             obj=elem,
             name;
@@ -93,9 +93,9 @@
         name=obj.className;
         name+=' '+value;
         obj.className=name;
-    	},
-    	// 移除class 如果class的值为空的话就移除class
-    	removeClass=function(elem,value){
+      },
+      // 移除class 如果class的值为空的话就移除class
+      removeClass=function(elem,value){
         var is=checkClass.call(elem,value),
             obj=elem,
             attribute=Q.trim(obj.className),
@@ -109,29 +109,29 @@
           var r=new RegExp('(\\s|^)' + value);
           obj.className=Q.trim(obj.className.replace(r,''));
         }
-    	},
-    	/** 生成唯一标识 **/
-    	uid=function(){
+      },
+      /** 生成唯一标识 **/
+      uid=function(){
         return 'Q'+(Math.random()+'').slice(-8);
-    	},
-    	// 设置和获取dom的UID bool为真则强制获取
-    	setDomUid=function(elem,bool){
+      },
+      // 设置和获取dom的UID bool为真则强制获取
+      setDomUid=function(elem,bool){
         return (bool || !elem.uid)?(elem.uid=uid()):elem.uid;
-    	},
-    	// 设置dom缓存
-    	setData=function(elem,key,value){
+      },
+      // 设置dom缓存
+      setData=function(elem,key,value){
         var uid=setDomUid(elem);
         if(!cacheDom[uid]){
           cacheDom[uid]={};
         }
         cacheDom[uid][key]=value;
-    	},
+      },
       // 读取dom缓存
       getData=function(elem,key){
         var uid=setDomUid(elem),
             result=cacheDom[uid]||undefined;
         return (result===undefined)?result:(result[key]!=undefined)?result[key]:undefined;
-    	},
+      },
       // 删除数据缓存
       deleteData=function(elem,key){
         var uid=setDomUid(elem),
@@ -143,7 +143,7 @@
             delete this.cacheDom[uid];
           }
         }
-    	};
+      };
   var buildFragment=function(args,nodes){
       var fragment,
           doc=nodes && nodes[0]?nodes[0].ownerDocument || nodes[0]:document,
@@ -435,21 +435,21 @@
         return parent
     })
   };
-	var result={
-		v:1.0,
+  var result={
+    v:1.0,
     map:function(fn){
       return Q(Q.map(this,function(el,i){return fn.call(el,i,el)}));
     },
-		each:function(callback,args){
-			return Q.each(this,callback,args);
-		},
+    each:function(callback,args){
+      return Q.each(this,callback,args);
+    },
     // 当参数为空的时候获取节点的文本 参数存在则设置
     html:function(value){
       if(value){
-      	this[0].innerHTML=value;
+        this[0].innerHTML=value;
         return this;
       }else{
-      	var r=this[0].innerHTML;
+        var r=this[0].innerHTML;
         return r;
       }
     },
@@ -458,10 +458,10 @@
       if(value){
         setAttr(this[0],name,value);
         return this;
-    	}else{
-    		var r=getAttr(this[0],name);
+      }else{
+        var r=getAttr(this[0],name);
         return r;
-     	}
+      }
     },
     // 检测class的值是不是已经存在
     hasClass:function(value){
@@ -485,25 +485,25 @@
     // 数据缓存读和写
     data:function(key,value){
       var elem=this[0],
-      		result;
+          result;
       if(key&&value){
-      	setDomUid(elem);
-      	setData(elem,key,value);
-      	return;
+        setDomUid(elem);
+        setData(elem,key,value);
+        return;
       }else if(key){
-      	result=getData(elem,key);
-      	return result;
+        result=getData(elem,key);
+        return result;
       }
     },
     // 数据缓存删除
     deleteData:function(key){
-    	var elem=this[0];
-    	if(!key){
-    		deleteData(elem);
-    	}else{
-    		deleteData(elem,key);
-    	}
-    	return this;
+      var elem=this[0];
+      if(!key){
+        deleteData(elem);
+      }else{
+        deleteData(elem,key);
+      }
+      return this;
     },
     bind:function(type,callback){
       var fn=null;
@@ -656,23 +656,23 @@
     remove:function(){
       (this[0].parentNode!=null)&&(this[0].parentNode.removeChild(this[0]));
     }
-	};
+  };
   // 最优动画方法
   Q.requestAnimationFrame=function(fn){
     win.Animation=null;
     var anim=win.requestAnimationFrame||win.webkitRequestAnimationFrame||win.mozRequestAnimationFrame||win.oRequestAnimationFrame||win.msRequestAnimationFrame||function(e,t){Animation=setTimeout(e,1000/60);}
     anim(fn);
   };
-	Q.extend=function(obj,prop){
-		var res;
-		(!prop)?(
-			res=extend(result,obj)
-		):(
-			res=extend(obj,prop)
-		);
-		return res;
-	};
-	Q.each=function(object,callback,args){
+  Q.extend=function(obj,prop){
+    var res;
+    (!prop)?(
+      res=extend(result,obj)
+    ):(
+      res=extend(obj,prop)
+    );
+    return res;
+  };
+  Q.each=function(object,callback,args){
     var name,i=0,length=object.length,isObj=length===undefined || this.isFunction(object);
     if(args){
       if(isObj){
@@ -696,11 +696,11 @@
           }
         }
       }else{
-      	for(;i<length;){
+        for(;i<length;){
           if(callback.call(object[i],i,object[i++])===false){
             break;
           }
-       	}
+        }
       }
     }
     return object;
@@ -713,7 +713,7 @@
         r=doc.JSON?doc.JSON.parse(d):(new Function('d','return'+d)());
     return r;
   };
-	Q.fn=result;
+  Q.fn=result;
   Q.each(['width','height'],function(i,e){
     var dimensionProperty=e.replace(/./,function(m){return m[0].toUpperCase();});
     Q.fn[e]=function(value){
@@ -742,7 +742,7 @@
       }
     return values;
   };
-	Q.ajax=function(options){
+  Q.ajax=function(options){
     var o={
       init:function(){return this.CreateHTTPObject();},
       accepts:function(a){
@@ -854,5 +854,5 @@
     };
     o.run(options||{});
   };
-	win.Q=win.$=Q;
+  win.Q=win.$=Q;
 }(window));
