@@ -207,8 +207,8 @@ $('#id或者.class').unbind('需要取消的事件名称');
 
 ### 图片延迟加载
 ```javascript
-// 在img标签设置data-src属性指向正确的图片资源地址 data-src可以自定义
-Q.fn.imgload('data-src');
+// 在img标签设置data-src属性指向正确的图片资源地址 data-src可以自定义 第二个属性为距离可视区域多少像素触发
+Q.fn.imgload('data-src',200);
 ```
 
 ### 图片上传模块
